@@ -1,0 +1,31 @@
+{
+  "name": "homeassistant-countdown-card",
+  "version": "1.0.0",
+  "description": "A simple countdown card for Home Assistant with live updating days, hours, minutes and seconds",
+  "type": "module",
+  "main": "dist/countdown-card.js",
+  "scripts": {
+    "build": "rollup -c",
+    "watch": "rollup -c --watch",
+    "lint": "eslint src/**/*.js"
+  },
+  "keywords": [
+    "home-assistant",
+    "homeassistant",
+    "hacs",
+    "lovelace",
+    "custom-card",
+    "countdown"
+  ],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "@babel/core": "^7.23.0",
+    "@babel/preset-env": "^7.23.0",
+    "@rollup/plugin-babel": "^6.0.4",
+    "@rollup/plugin-node-resolve": "^15.2.3",
+    "@rollup/plugin-terser": "^0.4.4",
+    "eslint": "^8.52.0",
+    "rollup": "^4.1.0"
+  }
+}

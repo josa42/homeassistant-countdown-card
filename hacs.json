@@ -1,0 +1,7 @@
+{
+  "name": "Countdown Card",
+  "content_in_root": false,
+  "filename": "countdown-card.js",
+  "render_readme": true,
+  "homeassistant": "2021.4.0"
+}
