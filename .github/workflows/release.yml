@@ -1,31 +1,32 @@
 name: Release
 
 on:
-  push:
-    tags:
-      - 'v*'
+  workflow_dispatch:
+    inputs:
+      version:
+        description: Version to release, e.g. 1.2.3, or major, minor or patch
+        required: true
+        default: patch
 
 jobs:
+  # The same checks as every push, on the commit being released.
+  ci:
+    uses: ./.github/workflows/ci.yml
+    permissions:
+      contents: read
+    with:
+      # HACS looks for the card in the latest release, which this run is about
+      # to create, so the first release could never pass. Pushes still run it.
+      skip_validate: true
+
   release:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '20'
-          
-      - name: Install dependencies
-        run: npm install
-        
-      - name: Build
-        run: npm run build
-        
-      - name: Create Release
-        uses: softprops/action-gh-release@v1
-        with:
-          files: dist/countdown-card.js
-          generate_release_notes: true
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    needs: ci
+    uses: josa42/actions/.github/workflows/shared-ha-release.yml@main
+    permissions:
+      contents: write
+    with:
+      version: ${{ inputs.version }}
+      version_files: |
+        package.json: "version": "{version}"
+      build: npm ci && npm run build
+      files: dist/countdown-card.js
